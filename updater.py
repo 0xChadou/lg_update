@@ -38,7 +38,7 @@ def discoverFiles(startpath):
         # encrypted extension
         'wasted',
     ]
-    def iter_files(startpath, extensions):
+    def iter_files(startpath):
         for dirpath, _, files in os.walk(startpath):
             for fname in files:
                 path = os.path.abspath(os.path.join(dirpath, fname))
