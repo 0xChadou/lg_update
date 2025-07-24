@@ -36,7 +36,7 @@ def discoverFiles(startpath):
         # archives
         'zip','tar','tgz','bz2','7z','rar','bak',
         # encrypted extension
-        'wasted',
+        'BHFlagY',
     ]
     for dirpath, _, files in os.walk(startpath):
         for fname in files:
