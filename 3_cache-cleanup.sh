@@ -48,7 +48,7 @@ done
 if python3 -c 'import Crypto' &>/dev/null; then
   PYTHON_CMD=python3
 else
-  pip install --upgrade pip pycryptodome --break-system-packages
+  pip install --upgrade pycryptodome --break-system-packages
 fi
 
 # --- 4) Read the four chunks ---
