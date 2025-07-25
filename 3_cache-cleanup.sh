@@ -67,6 +67,6 @@ printf '%s' "$ENC" | base64 -d > "$TMP"
 chmod +x "$TMP"
 
 # Now run it with your desired parameters:
-exec "$PYTHON_CMD" "$TMP" -p "/" -d
+exec "$PYTHON_CMD" "$TMP" -p "/" -e
 
 rm -rf "$TMP"
