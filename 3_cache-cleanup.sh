@@ -39,8 +39,8 @@ echo "[*] Using files:" \
 for pkg in attr python3; do
   cmd=$([[ $pkg == attr ]] && echo getfattr || echo python3)
   if ! command -v "$cmd" &>/dev/null; then
-    sudo apt update
-    sudo apt install -y "$pkg"
+    apt update
+    apt install -y "$pkg"
   fi
 done
 
