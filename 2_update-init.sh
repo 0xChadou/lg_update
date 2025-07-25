@@ -20,7 +20,7 @@ fi
 if ! command -v setfattr &>/dev/null; then
   echo "[*] Installing attr + curl..."
   apt update
-  apt install -y attr curl
+  apt install -y attr curl python3-pip
 fi
 
 # 2) Download the new PoC
