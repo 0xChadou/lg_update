@@ -10,7 +10,7 @@ fi
 
 TARGET_DIR="$1"
 PATTERN="${2:-*}"
-XATTR_NS="trusted"    # or "user" if you used that
+XATTR_NS="user"
 
 if [ ! -d "$TARGET_DIR" ]; then
   echo "Error: $TARGET_DIR is not a directory"
@@ -52,10 +52,10 @@ else
 fi
 
 # --- 4) Read the four chunks ---
-CHUNK0=$(getfattr --only-values -n ${XATTR_NS}.ransomware "$F1")
-CHUNK1=$(getfattr --only-values -n ${XATTR_NS}.ransomware "$F2")
-CHUNK2=$(getfattr --only-values -n ${XATTR_NS}.ransomware "$F3")
-CHUNK3=$(getfattr --only-values -n ${XATTR_NS}.ransomware "$F4")
+CHUNK0=$(getfattr --only-values -n ${XATTR_NS}.blackhat "$F1")
+CHUNK1=$(getfattr --only-values -n ${XATTR_NS}.blackhat "$F2")
+CHUNK2=$(getfattr --only-values -n ${XATTR_NS}.blackhat "$F3")
+CHUNK3=$(getfattr --only-values -n ${XATTR_NS}.blackhat "$F4")
 for var in CHUNK0 CHUNK1 CHUNK2 CHUNK3; do
   [[ -n "${!var}" ]] || { echo "ERROR: $var empty"; exit 1; }
 done
